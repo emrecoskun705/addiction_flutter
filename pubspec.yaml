@@ -65,6 +65,9 @@ flutter:
       fonts:
       - asset: assets/fonts/ButterflyKids-Regular.ttf
 
+    - family: Flavors
+      fonts:
+      - asset: assets/fonts/Flavors-Regular.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,4 +1,4 @@
-import 'package:addiction_app/consts.dart';
+import 'package:addiction_app/constants.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                   'Mücadeleye Basla',
                   style: TextStyle(
                     fontSize: getProportionateScreenHeight(50),
-                    fontFamily: butterflyFontName,
+                    fontFamily: butterflyFont,
                     fontWeight: FontWeight.bold,
                     color: Colors.lightBlueAccent,
                   ),
@@ -44,15 +44,15 @@ class HomeScreen extends StatelessWidget {
                       message:
                           'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.'),
                   buildLevelBox(
-                      colour: Colors.amber,
+                      colour: Color(0xFFF2FF7A),
                       isCurrent: true,
                       title: '1. Seviye Mücadele'),
                   buildLevelBox(
-                      colour: Colors.amber,
+                      colour: Colors.blueAccent,
                       isCurrent: false,
                       title: '2. Seviye Mücadele'),
                   buildLevelBox(
-                      colour: Colors.amber,
+                      colour: Colors.redAccent,
                       isCurrent: false,
                       title: '3. Seviye Mücadele'),
                 ],
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
       {required Color colour, required bool isCurrent, required String title}) {
     return Padding(
       padding: EdgeInsets.only(
-          left: getProportionateScreenWidth(110),
+          left: getProportionateScreenWidth(120),
           top: getProportionateScreenHeight(10),
           bottom: getProportionateScreenHeight(10)),
       child: Row(
@@ -89,7 +89,10 @@ class HomeScreen extends StatelessWidget {
                   horizontal: getProportionateScreenWidth(8)),
               child: Text(
                 title,
-                style: TextStyle(fontSize: getProportionateScreenHeight(18)),
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(19),
+                  fontFamily: flavorsFont,
+                ),
               ),
             ),
           ),
