@@ -8,49 +8,61 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(30),
-                  horizontal: getProportionateScreenWidth(30)),
-              child: Text(
-                'Mücadeleye Basla',
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(50),
-                  fontFamily: butterflyFontName,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlueAccent,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color(0xFFC6FFDD),
+                Color(0xFFFBD786),
+                Color(0xFFF7797d),
+              ]),
+        ),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(30),
+                    horizontal: getProportionateScreenWidth(30)),
+                child: Text(
+                  'Mücadeleye Basla',
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(50),
+                    fontFamily: butterflyFontName,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlueAccent,
+                  ),
                 ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InfoBubbleWidget(
-                    message:
-                        'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.'),
-                buildLevelBox(
-                    colour: Colors.amber,
-                    isCurrent: true,
-                    title: '1. Seviye Mücadele'),
-                buildLevelBox(
-                    colour: Colors.amber,
-                    isCurrent: false,
-                    title: '2. Seviye Mücadele'),
-                buildLevelBox(
-                    colour: Colors.amber,
-                    isCurrent: false,
-                    title: '3. Seviye Mücadele'),
-              ],
-            ),
-            InfoBubbleWidget(
-              message:
-                  'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.',
-            ),
-          ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InfoBubbleWidget(
+                      message:
+                          'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.'),
+                  buildLevelBox(
+                      colour: Colors.amber,
+                      isCurrent: true,
+                      title: '1. Seviye Mücadele'),
+                  buildLevelBox(
+                      colour: Colors.amber,
+                      isCurrent: false,
+                      title: '2. Seviye Mücadele'),
+                  buildLevelBox(
+                      colour: Colors.amber,
+                      isCurrent: false,
+                      title: '3. Seviye Mücadele'),
+                ],
+              ),
+              InfoBubbleWidget(
+                message:
+                    'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.',
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -60,7 +72,7 @@ class HomeScreen extends StatelessWidget {
       {required Color colour, required bool isCurrent, required String title}) {
     return Padding(
       padding: EdgeInsets.only(
-          left: getProportionateScreenWidth(100),
+          left: getProportionateScreenWidth(110),
           top: getProportionateScreenHeight(10),
           bottom: getProportionateScreenHeight(10)),
       child: Row(
@@ -68,7 +80,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(),
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(15),
               color: colour,
             ),
             child: Padding(
@@ -81,7 +93,12 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          isCurrent ? Icon(Icons.arrow_back) : SizedBox(),
+          isCurrent
+              ? Icon(
+                  Icons.arrow_back,
+                  size: getProportionateScreenHeight(30),
+                )
+              : SizedBox(),
           SizedBox(),
         ],
       ),

@@ -25,6 +25,13 @@ class InfoBubbleWidget extends StatelessWidget {
                 horizontal: getProportionateScreenWidth(8)),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.lightBlueAccent),
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xFFC6FFDD),
+                      Color(0xFFFBD786),
+                    ]),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15),
                   bottomLeft: Radius.circular(15),
@@ -34,7 +41,7 @@ class InfoBubbleWidget extends StatelessWidget {
                   BoxShadow(
                     blurRadius: .5,
                     spreadRadius: 1.0,
-                    color: Colors.black.withOpacity(0.12),
+                    // color: Colors.black.withOpacity(0.12),
                   ),
                 ]),
             child: Text(
