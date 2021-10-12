@@ -1,3 +1,4 @@
+import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,10 +14,15 @@ class InfoBubbleWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset('assets/svg/octocat.svg'),
+          SvgPicture.asset(
+            'assets/svg/octocat.svg',
+            height: getProportionateScreenHeight(50),
+          ),
           Container(
-            margin: EdgeInsets.only(left: 20),
-            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+            padding: EdgeInsets.symmetric(
+                vertical: getProportionateScreenHeight(8),
+                horizontal: getProportionateScreenWidth(8)),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.lightBlueAccent),
                 borderRadius: BorderRadius.only(
@@ -31,7 +37,10 @@ class InfoBubbleWidget extends StatelessWidget {
                     color: Colors.black.withOpacity(0.12),
                   ),
                 ]),
-            child: Text(message),
+            child: Text(
+              message,
+              style: TextStyle(fontSize: getProportionateScreenHeight(15)),
+            ),
           )
         ],
       ),

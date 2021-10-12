@@ -1,21 +1,25 @@
 import 'package:addiction_app/consts.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
+import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(30),
+                  horizontal: getProportionateScreenWidth(30)),
               child: Text(
                 'Mücadeleye Basla',
                 style: TextStyle(
-                  fontSize: 50,
+                  fontSize: getProportionateScreenHeight(50),
                   fontFamily: butterflyFontName,
                   fontWeight: FontWeight.bold,
                   color: Colors.lightBlueAccent,
@@ -55,7 +59,10 @@ class HomeScreen extends StatelessWidget {
   Widget buildLevelBox(
       {required Color colour, required bool isCurrent, required String title}) {
     return Padding(
-      padding: EdgeInsets.only(left: 100, top: 10, bottom: 10),
+      padding: EdgeInsets.only(
+          left: getProportionateScreenWidth(100),
+          top: getProportionateScreenHeight(10),
+          bottom: getProportionateScreenHeight(10)),
       child: Row(
         children: [
           SizedBox(),
@@ -65,10 +72,12 @@ class HomeScreen extends StatelessWidget {
               color: colour,
             ),
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(8),
+                  horizontal: getProportionateScreenWidth(8)),
               child: Text(
                 title,
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: getProportionateScreenHeight(18)),
               ),
             ),
           ),
