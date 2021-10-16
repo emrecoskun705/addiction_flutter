@@ -1,4 +1,5 @@
 import 'package:addiction_app/constants.dart';
+import 'package:addiction_app/screens/question_screen.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -46,15 +47,18 @@ class HomeScreen extends StatelessWidget {
                   buildLevelBox(
                       colour: Color(0xFFF2FF7A),
                       isCurrent: true,
-                      title: '1. Seviye Mücadele'),
+                      title: '1. Seviye Mücadele',
+                      context: context),
                   buildLevelBox(
                       colour: Colors.blueAccent,
                       isCurrent: false,
-                      title: '2. Seviye Mücadele'),
+                      title: '2. Seviye Mücadele',
+                      context: context),
                   buildLevelBox(
                       colour: Colors.redAccent,
                       isCurrent: false,
-                      title: '3. Seviye Mücadele'),
+                      title: '3. Seviye Mücadele',
+                      context: context),
                 ],
               ),
               InfoBubbleWidget(
@@ -69,41 +73,50 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildLevelBox(
-      {required Color colour, required bool isCurrent, required String title}) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: getProportionateScreenWidth(120),
-          top: getProportionateScreenHeight(10),
-          bottom: getProportionateScreenHeight(10)),
-      child: Row(
-        children: [
-          SizedBox(),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: colour,
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(8),
-                  horizontal: getProportionateScreenWidth(8)),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: getProportionateScreenHeight(19),
-                  fontFamily: flavorsFont,
+      {required Color colour,
+      required bool isCurrent,
+      required String title,
+      required BuildContext context}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => QuestionScreen()));
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+            left: getProportionateScreenWidth(120),
+            top: getProportionateScreenHeight(10),
+            bottom: getProportionateScreenHeight(10)),
+        child: Row(
+          children: [
+            SizedBox(),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: colour,
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(8),
+                    horizontal: getProportionateScreenWidth(8)),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(19),
+                    fontFamily: flavorsFont,
+                  ),
                 ),
               ),
             ),
-          ),
-          isCurrent
-              ? Icon(
-                  Icons.arrow_back,
-                  size: getProportionateScreenHeight(30),
-                )
-              : SizedBox(),
-          SizedBox(),
-        ],
+            isCurrent
+                ? Icon(
+                    Icons.arrow_back,
+                    size: getProportionateScreenHeight(30),
+                  )
+                : SizedBox(),
+            SizedBox(),
+          ],
+        ),
       ),
     );
   }
