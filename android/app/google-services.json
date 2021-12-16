@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "609546172631",
+    "project_id": "addictionapp-34d0e",
+    "storage_bucket": "addictionapp-34d0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609546172631:android:9b519dfa8b3c1cfa605892",
+        "android_client_info": {
+          "package_name": "tr.com.emrecoskun.addiction_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609546172631-n3q9csluagledqcjrkikhb6dnb55gq20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9zKSMI5kx_6Nu9GC2saONJJ6mRMMNt6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609546172631-n3q9csluagledqcjrkikhb6dnb55gq20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

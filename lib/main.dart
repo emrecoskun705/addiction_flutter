@@ -1,8 +1,9 @@
 import 'package:addiction_app/screens/home_screen.dart';
-import 'package:addiction_app/utils/size_config.dart';
+import 'package:addiction_app/screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light(),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
