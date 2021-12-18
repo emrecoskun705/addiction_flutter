@@ -94,12 +94,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           trueFalseList.add(falseIcon);
                         }
 
-                        setState(() {
+                        if (questionNumber + 1 != questions.length) {
+                          setState(() {
+                            questionNumber++;
+                          });
+                        } else {
                           questionNumber++;
-                        });
+                        }
 
                         //check if it is the last question
-                        if (questionNumber + 1 == questions.length) {
+                        if (questionNumber == questions.length) {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
@@ -119,12 +123,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           falseCount++;
                         }
 
-                        setState(() {
+                        if (questionNumber + 1 != questions.length) {
+                          setState(() {
+                            questionNumber++;
+                          });
+                        } else {
                           questionNumber++;
-                        });
+                        }
 
                         //check if it is the last question
-                        if (questionNumber + 1 == questions.length) {
+                        if (questionNumber == questions.length) {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
