@@ -4,6 +4,15 @@ import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmScreen extends StatelessWidget {
+  final int trueCount;
+  final int falseCount;
+  final List<String> scoreList;
+
+  ConfirmScreen(
+      {required this.trueCount,
+      required this.falseCount,
+      required this.scoreList});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +33,7 @@ class ConfirmScreen extends StatelessWidget {
             children: [
               InfoBubbleWidget(
                   message:
-                      '3 doğru 2 yanlış cevap verdiniz, sonuçlarınız anketin verimliliği için kayıt altına alınmıştır'),
+                      '$trueCount doğru $falseCount yanlış cevap verdiniz, sonuçlarınız anketin verimliliği için kayıt altına alınmıştır'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -36,7 +45,7 @@ class ConfirmScreen extends StatelessWidget {
                         size: getProportionateScreenHeight(90),
                       ),
                       Text(
-                        '3',
+                        '$trueCount',
                         style: TextStyle(
                           fontSize: getProportionateScreenHeight(40),
                         ),
@@ -51,7 +60,7 @@ class ConfirmScreen extends StatelessWidget {
                         size: getProportionateScreenHeight(90),
                       ),
                       Text(
-                        '3',
+                        '$falseCount',
                         style: TextStyle(
                           fontSize: getProportionateScreenHeight(40),
                         ),

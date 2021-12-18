@@ -134,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChanged: (index) {
                         setState(() {
                           _indexHorizontal2 = index;
-                          print(_indexHorizontal2);
                         });
                       }),
                 ),
@@ -156,7 +155,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChanged: (index) {
                         setState(() {
                           _parentIndex = index;
-                          print(_parentIndex);
                         });
                       }),
                 ),
@@ -191,11 +189,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             familyTogether:
                                 _parentIndex == 0 ? 'Birlikte' : 'Ayri');
 
-                        /*Navigator.pushAndRemoveUntil(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen(deneme.id)),
-                            (route) => false);*/
+                            (route) => false);
                       }),
                 )
               ],

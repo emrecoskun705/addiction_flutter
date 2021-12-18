@@ -90,7 +90,10 @@ class HomeScreen extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => QuestionScreen(type: type)));
+                builder: (context) => QuestionScreen(
+                      type: type,
+                      userId: userId,
+                    )));
       },
       child: Padding(
         padding: EdgeInsets.only(

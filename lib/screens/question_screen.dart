@@ -4,13 +4,15 @@ import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
 import 'package:addiction_app/utils/question_bank.dart';
 import 'package:addiction_app/utils/size_config.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:addiction_app/constants.dart';
 
 class QuestionScreen extends StatefulWidget {
   final AddictionType type;
+  final String userId;
 
-  QuestionScreen({required this.type});
+  QuestionScreen({required this.type, required this.userId});
 
   @override
   State<QuestionScreen> createState() => _QuestionScreenState();
@@ -18,6 +20,8 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   late List<Question> questions;
+  late String chosenType;
+
   int questionNumber = 0;
 
   int trueCount = 0;
@@ -27,16 +31,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void initState() {
     if (widget.type == AddictionType.alcohol) {
       questions = QuestionBank.alcoholAddiction;
+      chosenType = 'Alkol';
     } else if (widget.type == AddictionType.smoke) {
       questions = QuestionBank.smokeAddiction;
+      chosenType = 'Sigara';
     } else {
       // technology
       questions = QuestionBank.technologyAddiction;
+      chosenType = 'Teknoloji';
     }
     super.initState();
   }
 
   List<Icon> trueFalseList = [];
+  List<String> userScoreList = [];
 
   Icon trueIcon = Icon(
     Icons.check,
@@ -49,6 +57,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
     color: Colors.red,
     size: getProportionateScreenHeight(40),
   );
+
+  Future addTaskResult() {
+    CollectionReference result =
+        FirebaseFirestore.instance.collection('results');
+    return result.add({
+      'kullanici': widget.userId,
+      'bagimlilikTuru': chosenType,
+      'dogruSayisi': trueCount,
+      'yanlisSayisi': falseCount,
+      'kullaniciSkoru': userScoreList
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +105,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   RoundedButton(
                       title: 'Doğru',
                       bgColor: Colors.green,
-                      onPressed: () {
+                      onPressed: () async {
                         if (questions[questionNumber].answer == true) {
                           trueCount++;
                           trueFalseList.add(trueIcon);
+                          userScoreList.add('Dogru');
                         } else {
                           falseCount++;
                           trueFalseList.add(falseIcon);
+                          userScoreList.add('Yanlis');
                         }
 
                         if (questionNumber + 1 != questions.length) {
@@ -104,23 +126,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
                         //check if it is the last question
                         if (questionNumber == questions.length) {
+                          await addTaskResult();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ConfirmScreen()),
+                                  builder: (context) => ConfirmScreen(
+                                      trueCount: trueCount,
+                                      falseCount: falseCount,
+                                      scoreList: userScoreList)),
                               (route) => route.isFirst);
                         }
                       }),
                   RoundedButton(
                       title: 'Yanlış',
                       bgColor: Colors.red,
-                      onPressed: () {
+                      onPressed: () async {
                         if (questions[questionNumber].answer == false) {
                           trueCount++;
                           trueFalseList.add(trueIcon);
+                          userScoreList.add('Dogru');
                         } else {
                           trueFalseList.add(falseIcon);
                           falseCount++;
+                          userScoreList.add('Yanlis');
                         }
 
                         if (questionNumber + 1 != questions.length) {
@@ -133,11 +161,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
                         //check if it is the last question
                         if (questionNumber == questions.length) {
+                          await addTaskResult();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ConfirmScreen()),
-                              (route) => false);
+                                  builder: (context) => ConfirmScreen(
+                                      trueCount: trueCount,
+                                      falseCount: falseCount,
+                                      scoreList: userScoreList)),
+                              (route) => route.isFirst);
                         }
                       }),
                 ],
