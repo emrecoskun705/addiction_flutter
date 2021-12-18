@@ -1,9 +1,55 @@
+import 'package:addiction_app/models/question.dart';
+import 'package:addiction_app/screens/confirm_screen.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
+import 'package:addiction_app/utils/question_bank.dart';
 import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:addiction_app/constants.dart';
 
-class QuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatefulWidget {
+  final AddictionType type;
+
+  QuestionScreen({required this.type});
+
+  @override
+  State<QuestionScreen> createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
+  late List<Question> questions;
+  int questionNumber = 0;
+
+  int trueCount = 0;
+  int falseCount = 0;
+
+  @override
+  void initState() {
+    if (widget.type == AddictionType.alcohol) {
+      questions = QuestionBank.alcoholAddiction;
+    } else if (widget.type == AddictionType.smoke) {
+      questions = QuestionBank.smokeAddiction;
+    } else {
+      // technology
+      questions = QuestionBank.technologyAddiction;
+    }
+    super.initState();
+  }
+
+  List<Icon> trueFalseList = [];
+
+  Icon trueIcon = Icon(
+    Icons.check,
+    color: Colors.green,
+    size: getProportionateScreenHeight(40),
+  );
+
+  Icon falseIcon = Icon(
+    Icons.close,
+    color: Colors.red,
+    size: getProportionateScreenHeight(40),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,31 +76,66 @@ class QuestionScreen extends StatelessWidget {
                           'Doğru cevapları ver, puanları kazan. Sen de bir ünvan kazan. Bu bölümün ünvanı "Çaylak Mücadeleci"'),
                   Center(
                     child: Text(
-                      'Aşama 1',
+                      'Soru ${questionNumber + 1}',
                       style:
                           TextStyle(fontSize: getProportionateScreenHeight(35)),
                     ),
                   ),
-                  buildQuestion(),
+                  buildQuestion(questions[questionNumber].question),
                   RoundedButton(
-                      title: 'Doğru', bgColor: Colors.green, onPressed: () {}),
+                      title: 'Doğru',
+                      bgColor: Colors.green,
+                      onPressed: () {
+                        if (questions[questionNumber].answer == true) {
+                          trueCount++;
+                          trueFalseList.add(trueIcon);
+                        } else {
+                          falseCount++;
+                          trueFalseList.add(falseIcon);
+                        }
+
+                        setState(() {
+                          questionNumber++;
+                        });
+
+                        //check if it is the last question
+                        if (questionNumber + 1 == questions.length) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ConfirmScreen()),
+                              (route) => false);
+                        }
+                      }),
                   RoundedButton(
-                      title: 'Yanlış', bgColor: Colors.red, onPressed: () {}),
+                      title: 'Yanlış',
+                      bgColor: Colors.red,
+                      onPressed: () {
+                        if (questions[questionNumber].answer == false) {
+                          trueCount++;
+                          trueFalseList.add(trueIcon);
+                        } else {
+                          trueFalseList.add(falseIcon);
+                          falseCount++;
+                        }
+
+                        setState(() {
+                          questionNumber++;
+                        });
+
+                        //check if it is the last question
+                        if (questionNumber + 1 == questions.length) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ConfirmScreen()),
+                              (route) => false);
+                        }
+                      }),
                 ],
               ),
               Row(
-                children: [
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: getProportionateScreenHeight(40),
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: getProportionateScreenHeight(40),
-                  ),
-                ],
+                children: trueFalseList.map((e) => e).toList(),
               )
             ],
           ),
@@ -63,7 +144,7 @@ class QuestionScreen extends StatelessWidget {
     );
   }
 
-  Padding buildQuestion() {
+  Padding buildQuestion(String question) {
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: getProportionateScreenWidth(10),
@@ -86,7 +167,7 @@ class QuestionScreen extends StatelessWidget {
                 vertical: getProportionateScreenHeight(5),
                 horizontal: getProportionateScreenWidth(5)),
             child: Text(
-              'İnsanlarla internet üzerinden konuşmayı yüz yüze konuşmaya tercih etmek teknoloji bağımlılığının belirtilerinden biridir.',
+              question,
               style: TextStyle(fontSize: getProportionateScreenHeight(25)),
             ),
           ),

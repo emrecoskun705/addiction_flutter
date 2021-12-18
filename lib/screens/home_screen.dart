@@ -48,17 +48,20 @@ class HomeScreen extends StatelessWidget {
                       colour: Color(0xFFF2FF7A),
                       isCurrent: true,
                       title: 'Teknoloji Bagımlılıgı',
-                      context: context),
+                      context: context,
+                      type: AddictionType.technology),
                   buildLevelBox(
                       colour: Colors.blueAccent,
                       isCurrent: false,
                       title: 'Sigara Bagımlılıgı    ',
-                      context: context),
+                      context: context,
+                      type: AddictionType.smoke),
                   buildLevelBox(
                       colour: Colors.redAccent,
                       isCurrent: false,
                       title: 'Alkol Bagımlılıgı      ',
-                      context: context),
+                      context: context,
+                      type: AddictionType.alcohol),
                 ],
               ),
               InfoBubbleWidget(
@@ -76,11 +79,14 @@ class HomeScreen extends StatelessWidget {
       {required Color colour,
       required bool isCurrent,
       required String title,
-      required BuildContext context}) {
+      required BuildContext context,
+      required AddictionType type}) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => QuestionScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => QuestionScreen(type: type)));
       },
       child: Padding(
         padding: EdgeInsets.only(
