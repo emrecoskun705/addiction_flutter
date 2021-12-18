@@ -47,17 +47,17 @@ class HomeScreen extends StatelessWidget {
                   buildLevelBox(
                       colour: Color(0xFFF2FF7A),
                       isCurrent: true,
-                      title: '1. Seviye Mücadele',
+                      title: 'Teknoloji Bagımlılıgı',
                       context: context),
                   buildLevelBox(
                       colour: Colors.blueAccent,
                       isCurrent: false,
-                      title: '2. Seviye Mücadele',
+                      title: 'Sigara Bagımlılıgı    ',
                       context: context),
                   buildLevelBox(
                       colour: Colors.redAccent,
                       isCurrent: false,
-                      title: '3. Seviye Mücadele',
+                      title: 'Alkol Bagımlılıgı      ',
                       context: context),
                 ],
               ),

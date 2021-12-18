@@ -86,7 +86,7 @@ class QuestionScreen extends StatelessWidget {
                 vertical: getProportionateScreenHeight(5),
                 horizontal: getProportionateScreenWidth(5)),
             child: Text(
-              'Alkol sağlığa zaralıdır.',
+              'İnsanlarla internet üzerinden konuşmayı yüz yüze konuşmaya tercih etmek teknoloji bağımlılığının belirtilerinden biridir.',
               style: TextStyle(fontSize: getProportionateScreenHeight(25)),
             ),
           ),

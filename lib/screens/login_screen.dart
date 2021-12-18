@@ -1,3 +1,4 @@
+import 'package:addiction_app/screens/home_screen.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/info_text_field.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController parents = TextEditingController();
 
   final _listHorizontal = ["Sağ", "Hayatta değil"];
-  final _parentRelation = ['Birlikte yaşıyor', 'Ayrı'];
+  final _parentRelation = ['Birlikte', 'Ayrı'];
   int? _parentIndex = null;
   int? _indexHorizontal = null;
   @override
@@ -137,12 +138,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       }),
                 ),
-                RoundedButton(
-                    title: 'click',
-                    bgColor: Colors.lightBlue,
-                    onPressed: () {
-                      addUser();
-                    })
+                Center(
+                  child: RoundedButton(
+                      title: 'Başla',
+                      bgColor: Colors.lightBlue,
+                      onPressed: () async {
+                        await addUser();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                            (route) => false);
+                      }),
+                )
               ],
             ),
           ),
