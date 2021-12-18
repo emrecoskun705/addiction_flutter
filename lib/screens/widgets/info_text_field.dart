@@ -23,6 +23,7 @@ class InfoTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
             isDense: true,
             hintText: hint,

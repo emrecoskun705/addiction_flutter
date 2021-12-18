@@ -1,4 +1,3 @@
-import 'package:addiction_app/screens/home_screen.dart';
 import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
 import 'package:addiction_app/utils/size_config.dart';
@@ -65,10 +64,7 @@ class ConfirmScreen extends StatelessWidget {
                   title: 'Ana menüye dönmek için tıklayınız',
                   bgColor: Colors.lightBlueAccent,
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                        (route) => false);
+                    Navigator.pop(context);
                   }),
             ],
           ),

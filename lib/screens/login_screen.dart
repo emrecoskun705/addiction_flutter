@@ -30,14 +30,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final _parentRelation = ['Birlikte', 'Ayrı'];
   int? _parentIndex = null;
   int? _indexHorizontal = null;
+  int? _indexHorizontal2 = null;
+  Gender? selectedGender = null;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    Future<void> addUser() {
+    Future addUser(
+        {required int? age,
+        required int studentClass,
+        required String gender,
+        required String motherAlive,
+        required String fatherAlive,
+        required String familyTogether}) {
       CollectionReference userInfo =
           FirebaseFirestore.instance.collection('users');
-      return userInfo.add({'deneme': 'denem1', 'deneme2': 'deneme2'});
+      return userInfo.add({
+        'yas': age,
+        'sinif': studentClass,
+        'cinsiyet': gender,
+        'anne': motherAlive,
+        'baba': fatherAlive,
+        'birlikte': familyTogether
+      });
     }
 
     return Scaffold(
@@ -64,16 +80,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 InfoTextField(
                     hint: 'Yaşınızı giriniz',
                     prefixIcon: Icons.eight_k,
-                    controller: classText),
+                    controller: age),
                 InfoTextField(
                     hint: 'Sınıfınızı giriniz',
                     prefixIcon: Icons.eight_k,
-                    controller: age),
+                    controller: classText),
                 GenderPickerWithImage(
-                  onChanged: (Gender? gender) {},
+                  onChanged: (Gender? gender) {
+                    setState(() {
+                      selectedGender = gender;
+                    });
+                  },
                   maleText: 'Erkek',
                   femaleText: 'Kadın',
-                  selectedGender: null,
+                  selectedGender: selectedGender,
                 ),
                 Padding(
                   padding:
@@ -109,11 +129,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: "Baba",
                       activeColor: Colors.blue,
                       titleStyle: TextStyle(fontSize: 14),
-                      defaultSelected: _indexHorizontal,
+                      defaultSelected: _indexHorizontal2,
                       orientation: RGOrientation.HORIZONTAL,
                       onChanged: (index) {
                         setState(() {
-                          _indexHorizontal = index;
+                          _indexHorizontal2 = index;
+                          print(_indexHorizontal2);
                         });
                       }),
                 ),
@@ -135,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChanged: (index) {
                         setState(() {
                           _parentIndex = index;
+                          print(_parentIndex);
                         });
                       }),
                 ),
@@ -143,12 +165,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       title: 'Başla',
                       bgColor: Colors.lightBlue,
                       onPressed: () async {
-                        await addUser();
-                        Navigator.pushAndRemoveUntil(
+                        if (age.text == '' ||
+                            classText.text == '' ||
+                            selectedGender == null ||
+                            _indexHorizontal == null ||
+                            _indexHorizontal2 == null ||
+                            _parentIndex == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Lütfen tüm alanları doldurunuz'),
+                          ));
+                          return;
+                        }
+
+                        var deneme = await addUser(
+                            age: int.parse(age.text),
+                            studentClass: int.parse(classText.text),
+                            gender: selectedGender == Gender.Male
+                                ? 'erkek'
+                                : 'kadin',
+                            motherAlive:
+                                _indexHorizontal == 0 ? 'Sag' : 'Hayatta degil',
+                            fatherAlive: _indexHorizontal2 == 0
+                                ? 'Sag'
+                                : 'Hayatta degil',
+                            familyTogether:
+                                _parentIndex == 0 ? 'Birlikte' : 'Ayri');
+
+                        /*Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
-                            (route) => false);
+                                builder: (context) => HomeScreen(deneme.id)),
+                            (route) => false);*/
                       }),
                 )
               ],

@@ -108,7 +108,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ConfirmScreen()),
-                              (route) => false);
+                              (route) => route.isFirst);
                         }
                       }),
                   RoundedButton(

@@ -5,6 +5,10 @@ import 'package:addiction_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  final String userId;
+
+  HomeScreen(this.userId);
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
