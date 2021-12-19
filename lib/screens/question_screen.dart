@@ -46,6 +46,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   List<Icon> trueFalseList = [];
   List<String> userScoreList = [];
 
+  List<Question> falseQuestions = [];
+
   Icon trueIcon = Icon(
     Icons.check,
     color: Colors.green,
@@ -96,12 +98,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           'Doğru cevapları ver, puanları kazan. Sen de bir ünvan kazan. Bu bölümün ünvanı "Çaylak Mücadeleci"'),
                   Center(
                     child: Text(
-                      'Soru ${questionNumber + 1}',
+                      'Soru ${questionNumber > questions.length - 1 ? questions.length : questionNumber + 1}',
                       style:
                           TextStyle(fontSize: getProportionateScreenHeight(35)),
                     ),
                   ),
-                  buildQuestion(questions[questionNumber].question),
+                  buildQuestion(questions[questionNumber > questions.length - 1
+                          ? questions.length - 1
+                          : questionNumber]
+                      .question),
                   RoundedButton(
                       title: 'Doğru',
                       bgColor: Colors.green,
@@ -114,27 +119,43 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           falseCount++;
                           trueFalseList.add(falseIcon);
                           userScoreList.add('Yanlis');
+                          falseQuestions.add(questions[questionNumber]);
                         }
 
-                        if (questionNumber + 1 != questions.length) {
-                          setState(() {
-                            questionNumber++;
-                          });
-                        } else {
+                        setState(() {
                           questionNumber++;
-                        }
+                        });
 
                         //check if it is the last question
                         if (questionNumber == questions.length) {
-                          await addTaskResult();
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ConfirmScreen(
-                                      trueCount: trueCount,
-                                      falseCount: falseCount,
-                                      scoreList: userScoreList)),
-                              (route) => route.isFirst);
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                              title: Text('Sonuç'),
+                              content: Text(
+                                  'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await addTaskResult();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmScreen(
+                                                    trueCount: trueCount,
+                                                    falseCount: falseCount,
+                                                    scoreList: userScoreList,
+                                                    falseQuestions:
+                                                        falseQuestions,
+                                                  )),
+                                          (route) => route.isFirst);
+                                    },
+                                    child: Text('Gönder'))
+                              ],
+                            ),
+                          );
                         }
                       }),
                   RoundedButton(
@@ -149,27 +170,43 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           trueFalseList.add(falseIcon);
                           falseCount++;
                           userScoreList.add('Yanlis');
+                          falseQuestions.add(questions[questionNumber]);
                         }
 
-                        if (questionNumber + 1 != questions.length) {
-                          setState(() {
-                            questionNumber++;
-                          });
-                        } else {
+                        setState(() {
                           questionNumber++;
-                        }
+                        });
 
                         //check if it is the last question
                         if (questionNumber == questions.length) {
-                          await addTaskResult();
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ConfirmScreen(
-                                      trueCount: trueCount,
-                                      falseCount: falseCount,
-                                      scoreList: userScoreList)),
-                              (route) => route.isFirst);
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                              title: Text('Sonuç'),
+                              content: Text(
+                                  'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await addTaskResult();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmScreen(
+                                                    trueCount: trueCount,
+                                                    falseCount: falseCount,
+                                                    scoreList: userScoreList,
+                                                    falseQuestions:
+                                                        falseQuestions,
+                                                  )),
+                                          (route) => route.isFirst);
+                                    },
+                                    child: Text('Gönder'))
+                              ],
+                            ),
+                          );
                         }
                       }),
                 ],
