@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   InfoBubbleWidget(
                       message:
-                          'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.'),
+                          'Bu anketin her seviyesinde bir bağımlılık türü ele alınmıştır. Lütfen herhangi bir bağımlılık türüne tıkla ve gelen soruları yanıtla.'),
                   buildLevelBox(
                       colour: Color(0xFFF2FF7A),
                       isCurrent: true,
@@ -56,13 +56,13 @@ class HomeScreen extends StatelessWidget {
                       type: AddictionType.technology),
                   buildLevelBox(
                       colour: Colors.blueAccent,
-                      isCurrent: false,
+                      isCurrent: true,
                       title: 'Sigara Bagımlılıgı    ',
                       context: context,
                       type: AddictionType.smoke),
                   buildLevelBox(
                       colour: Colors.redAccent,
-                      isCurrent: false,
+                      isCurrent: true,
                       title: 'Alkol Bagımlılıgı      ',
                       context: context,
                       type: AddictionType.alcohol),
@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
               ),
               InfoBubbleWidget(
                 message:
-                    'Her seviyede yeni bir ünvan kazan! Tüm görevleri tamamla sen de mücadeleci ol.',
+                    'Bu anketin her seviyesinde bir bağımlılık türü ele alınmıştır. Lütfen herhangi bir bağımlılık türüne tıkla ve gelen soruları yanıtla.',
               ),
             ],
           ),

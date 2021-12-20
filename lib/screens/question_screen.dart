@@ -93,9 +93,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Center(
+                    child: Text(
+                      '$chosenType Bağımlılığı',
+                      style:
+                          TextStyle(fontSize: getProportionateScreenHeight(25)),
+                    ),
+                  ),
                   InfoBubbleWidget(
                       message:
-                          'Doğru cevapları ver, puanları kazan. Sen de bir ünvan kazan. Bu bölümün ünvanı "Çaylak Mücadeleci"'),
+                          'Aşağıda verilen soruları okuyup doğru cevapları vermeye çalış, eğer yanlış cevapların olursa testin sonunda kontrol edebilirsin.'),
                   Center(
                     child: Text(
                       'Soru ${questionNumber > questions.length - 1 ? questions.length : questionNumber + 1}',
