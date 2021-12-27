@@ -96,5 +96,19 @@ class QuestionBank {
         'Dertlerden kaçmanın, unutmanın tek yolu alkol kullanmaktır.',
         false,
         'Dertlerden kaçmanın yolu olarak görmek yanlıştır, sosyal hayatta dertlerimizi çözmek için gerçek hayattan uzak olmamamız gerekir ve bu yüzden alkol kullanılmamalıdır.'),
+    Question(
+        "Çoğu kez, istendiğinden daha fazla ya da daha uzun süreli olarak alkol alınması, Alkol bağımlılığının temel etkilerinden biridir.",
+        true,
+        "Alkol bağımlıları kendine engel olamadığı için istediğinden fazla alkol tüketmektedir."),
+    Question("Alkol bağımlılığında tek tip bir tedavi kullanılır. ", false,
+        "Hayır, Tedavi hastanın ihtiyaçlarına göre seçilmelidir."),
+    Question(
+        "Alkol bağımlısı insanlarla görüşmeyin ve onlardan uzak durun.",
+        false,
+        "Bağımlılık tedavi metotları hakkında bilgi sahibi olun. Bağımlıya bunlardan bahsedin ve bu konu hakkında bilgilendirin."),
+    Question("Alkol bağımlılığından kurtulmak mümkündür.", true,
+        "Alkol iyileşebilen bir beyin hastalığıdır. Alkolü bırakmak zor olabilir, ancak bağımlılık üzerine uzman bir ekipten destek alarak kurtulmak mümkündür."),
+    Question("Aşırı alkol kullanımı ölüm riskine neden olmaz.", false,
+        "Yapılan araştırmalara göre alkolün riskli kullanımına bağlı olarak dünya çapında 3 milyon ölümün gerçekleştiği bilinmektedir."),
   ];
 }

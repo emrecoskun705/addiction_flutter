@@ -4,7 +4,6 @@ import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
 import 'package:addiction_app/utils/question_bank.dart';
 import 'package:addiction_app/utils/size_config.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:addiction_app/constants.dart';
@@ -61,8 +60,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     size: getProportionateScreenHeight(40),
   );
 
-  void goBackPreviousQuestion() {}
-
   Future addTaskResult() {
     CollectionReference result =
         FirebaseFirestore.instance.collection('results');
@@ -71,187 +68,153 @@ class _QuestionScreenState extends State<QuestionScreen> {
       'bagimlilikTuru': chosenType,
       'dogruSayisi': trueCount,
       'yanlisSayisi': falseCount,
-      'kullaniciSkoru': userScoreList,
-      'olusturuldu': FieldValue.serverTimestamp()
+      'kullaniciSkoru': userScoreList
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xFFC6FFDD),
-                  Color(0xFFFBD786),
-                  Color(0xFFF7797d),
-                ]),
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(
-                      child: Text(
-                        '$chosenType Bağımlılığı',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(25)),
-                      ),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color(0xFFC6FFDD),
+                Color(0xFFFBD786),
+                Color(0xFFF7797d),
+              ]),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InfoBubbleWidget(
+                      message:
+                          'Doğru cevapları ver, puanları kazan. Sen de bir ünvan kazan. Bu bölümün ünvanı "Çaylak Mücadeleci"'),
+                  Center(
+                    child: Text(
+                      'Soru ${questionNumber > questions.length - 1 ? questions.length : questionNumber + 1}',
+                      style:
+                          TextStyle(fontSize: getProportionateScreenHeight(35)),
                     ),
-                    InfoBubbleWidget(
-                        message:
-                            'Aşağıda verilen soruları okuyup doğru cevapları vermeye çalış, eğer yanlış cevapların olursa testin sonunda kontrol edebilirsin.'),
-                    Center(
-                      child: Text(
-                        'Soru ${questionNumber > questions.length - 1 ? questions.length : questionNumber + 1}',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(35)),
-                      ),
-                    ),
-                    buildQuestion(questions[
-                            questionNumber > questions.length - 1
-                                ? questions.length - 1
-                                : questionNumber]
-                        .question),
-                    RoundedButton(
-                        title: 'Doğru',
-                        bgColor: Colors.green,
-                        onPressed: () async {
-                          if (questions[questionNumber].answer == true) {
-                            trueCount++;
-                            trueFalseList.add(trueIcon);
-                            userScoreList.add('Dogru');
-                          } else {
-                            // if answer is false show a dialog about correct answer
-                            await (AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.ERROR,
-                              width: getProportionateScreenWidth(380),
-                              title: 'Yanlış cevap verdiniz',
-                              desc: questions[questionNumber].info,
-                              showCloseIcon: true,
-                            ).show());
-                            falseCount++;
-                            trueFalseList.add(falseIcon);
-                            userScoreList.add('Yanlis');
-                            falseQuestions.add(questions[questionNumber]);
-                          }
+                  ),
+                  buildQuestion(questions[questionNumber > questions.length - 1
+                          ? questions.length - 1
+                          : questionNumber]
+                      .question),
+                  RoundedButton(
+                      title: 'Doğru',
+                      bgColor: Colors.green,
+                      onPressed: () async {
+                        if (questions[questionNumber].answer == true) {
+                          trueCount++;
+                          trueFalseList.add(trueIcon);
+                          userScoreList.add('Dogru');
+                        } else {
+                          falseCount++;
+                          trueFalseList.add(falseIcon);
+                          userScoreList.add('Yanlis');
+                          falseQuestions.add(questions[questionNumber]);
+                        }
 
-                          setState(() {
-                            questionNumber++;
-                          });
+                        setState(() {
+                          questionNumber++;
+                        });
 
-                          //check if it is the last question
-                          if (questionNumber == questions.length) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => WillPopScope(
-                                onWillPop: () async => false,
-                                child: AlertDialog(
-                                  title: Text('Sonuç'),
-                                  content: Text(
-                                      'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
-                                  actions: [
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          await addTaskResult();
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ConfirmScreen(
-                                                        trueCount: trueCount,
-                                                        falseCount: falseCount,
-                                                        scoreList:
-                                                            userScoreList,
-                                                        falseQuestions:
-                                                            falseQuestions,
-                                                      )),
-                                              (route) => route.isFirst);
-                                        },
-                                        child: Text('Gönder'))
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                    RoundedButton(
-                        title: 'Yanlış',
-                        bgColor: Colors.red,
-                        onPressed: () async {
-                          if (questions[questionNumber].answer == false) {
-                            trueCount++;
-                            trueFalseList.add(trueIcon);
-                            userScoreList.add('Dogru');
-                          } else {
-                            // if answer is false show a dialog about correct answer
-                            await (AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.ERROR,
-                              width: getProportionateScreenWidth(380),
-                              title: 'Yanlış cevap verdiniz',
-                              desc: questions[questionNumber].info,
-                              showCloseIcon: true,
-                            ).show());
-                            trueFalseList.add(falseIcon);
-                            falseCount++;
-                            userScoreList.add('Yanlis');
-                            falseQuestions.add(questions[questionNumber]);
-                          }
+                        //check if it is the last question
+                        if (questionNumber == questions.length) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                              title: Text('Sonuç'),
+                              content: Text(
+                                  'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await addTaskResult();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmScreen(
+                                                    trueCount: trueCount,
+                                                    falseCount: falseCount,
+                                                    scoreList: userScoreList,
+                                                    falseQuestions:
+                                                        falseQuestions,
+                                                  )),
+                                          (route) => route.isFirst);
+                                    },
+                                    child: Text('Gönder'))
+                              ],
+                            ),
+                          );
+                        }
+                      }),
+                  RoundedButton(
+                      title: 'Yanlış',
+                      bgColor: Colors.red,
+                      onPressed: () async {
+                        if (questions[questionNumber].answer == false) {
+                          trueCount++;
+                          trueFalseList.add(trueIcon);
+                          userScoreList.add('Dogru');
+                        } else {
+                          trueFalseList.add(falseIcon);
+                          falseCount++;
+                          userScoreList.add('Yanlis');
+                          falseQuestions.add(questions[questionNumber]);
+                        }
 
-                          setState(() {
-                            questionNumber++;
-                          });
+                        setState(() {
+                          questionNumber++;
+                        });
 
-                          //check if it is the last question
-                          if (questionNumber == questions.length) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => AlertDialog(
-                                title: Text('Sonuç'),
-                                content: Text(
-                                    'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () async {
-                                        await addTaskResult();
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConfirmScreen(
-                                                      trueCount: trueCount,
-                                                      falseCount: falseCount,
-                                                      scoreList: userScoreList,
-                                                      falseQuestions:
-                                                          falseQuestions,
-                                                    )),
-                                            (route) => route.isFirst);
-                                      },
-                                      child: Text('Gönder'))
-                                ],
-                              ),
-                            );
-                          }
-                        }),
-                  ],
-                ),
-                Row(
-                  children: trueFalseList.map((e) => e).toList(),
-                )
-              ],
-            ),
+                        //check if it is the last question
+                        if (questionNumber == questions.length) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                              title: Text('Sonuç'),
+                              content: Text(
+                                  'Sonuçlarınızı göndermek için lütfen butona tıklayınız.'),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await addTaskResult();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmScreen(
+                                                    trueCount: trueCount,
+                                                    falseCount: falseCount,
+                                                    scoreList: userScoreList,
+                                                    falseQuestions:
+                                                        falseQuestions,
+                                                  )),
+                                          (route) => route.isFirst);
+                                    },
+                                    child: Text('Gönder'))
+                              ],
+                            ),
+                          );
+                        }
+                      }),
+                ],
+              ),
+              Row(
+                children: trueFalseList.map((e) => e).toList(),
+              )
+            ],
           ),
         ),
       ),

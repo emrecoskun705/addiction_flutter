@@ -1,4 +1,3 @@
-import 'package:addiction_app/screens/home_screen.dart';
 import 'package:addiction_app/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +33,9 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasError) {
               return Container();
             }
-
             if (snapshot.connectionState == ConnectionState.done) {
               return LoginScreen();
             }
-
             return Container();
           },
         ));
