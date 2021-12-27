@@ -22,6 +22,24 @@ class QuestionBank {
         'Okuldaki başarıda düşüş, kişisel, aile, okul sorunları ve aktivitelerde azalma sosyal alanda görülen bir şikayet değildir.',
         false,
         'Teknoloji bağımlısı olan insanlarda derslerde düşüş ve sosyal hayatta başarısızlıklar gözlenir.'),
+    Question(
+        'Günlük internet kullanım saatlerini değiştirmek Teknoloji Bağımlılığının kontrol alma yöntemlerden biridir.',
+        true,
+        'Günlük internet kullanım saatlerini değiştirmek Teknoloji Bağımlılığını kontrol altına alabilir. '),
+    Question(
+        'Bilgisayarınızdan uzak kaldığınız zaman gergin ve boşluktaymış gibi hissetmek Teknoloji Bağımlılığının belirtilerindendir.',
+        true,
+        'Bilgisayarınızdan uzak kaldığınız zaman gergin ve boşluktaymış gibi hissediyorsanız Teknoloji Bağımlılığısı olabilirsiniz.'),
+    Question('Gece geç saatlere kadar bilgisayar başında kalmalıyız.', false,
+        'Gece geç saatlere kadar bilgisayar başında kalmamalıyız.'),
+    Question(
+        'Teknoloji bağımlılığı, teknolojinin insanı kontrol etmesi durumudur.',
+        true,
+        'Teknoloji bağımlılığı, teknolojinin insanı kontrol etmesi durumuyla teşhis edilip, tanımlanabilir.'),
+    Question(
+        'Teknoloji bağımlılığı söz konusu olduğunda teknoloji hayatı kolaylaştıran bir unsura dönüşmektedir.',
+        false,
+        'Teknoloji bağımlılığı söz konusu olduğunda teknoloji hayatı zorlaştıran bir unsura dönüşmektedir.')
   ];
 
   static List<Question> smokeAddiction = [
@@ -43,6 +61,22 @@ class QuestionBank {
         'Sigara kullananlarda, vücutta yorgunluk, aşırı stres ve uykusuzluk gibi durumlar görülmez.',
         false,
         'Sigara içen kişilerde uyku problemleri ortaya çıkar ve stresli bir yaşam tarzına sahip olurlar.'),
+    Question(
+        'Sigara bağımlılığı tedavi edilebilir bir kronik beyin hastalığıdır.',
+        true,
+        'Sigara bağımlılığı kroniktir yani sürekli tekrar eder fakat tedavi edilebilir bir hastalıktır.'),
+    Question(
+        'Sigara bağımlılığı tedavi edilmezse ömür boyu devam etmez.',
+        false,
+        'Sigara bağımlılığı tedavi edilmezse ömür boyu devam eder ve insanın hayatının kısıtlanmasına sebep olur.'),
+    Question('Sigara bağımlılığı yüzünden insanlar yoksunluk çekerler.', true,
+        'Yoksunluk, vücudun bir şeyi alamadığında vücudun verdiği psikolojik tepkilerdir. Örneğin uzun süre sigara içmeyen birinin sinirlenmesi.'),
+    Question('Sigaranın sosyal ilişkilere etkisi yoktur.', false,
+        'Sigara okul,aile, arkadaş çevresinin olumsuz şekilde etkilenmesine sebep olur ve sosyal bağlarımızın zayıflamasına sebep olur.'),
+    Question(
+        'Yeşilay, sigara bağımlılığı ile mücadele eden bir kurumdur.',
+        true,
+        'Yeşilay alkol, sigara gibi vücuda zararı olan maddelerle savaşan bir kurumdur.'),
   ];
 
   static List<Question> alcoholAddiction = [
