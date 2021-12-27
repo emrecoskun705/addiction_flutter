@@ -62,17 +62,20 @@ class ConfirmScreen extends StatelessWidget {
                                     fontSize: getProportionateScreenHeight(35),
                                     fontWeight: FontWeight.bold),
                               ),
-                              title: Text(falseQuestions[index].question),
+                              title: Text(falseQuestions[index].info),
                             );
                           }),
                     )
                   : SizedBox(),
-              RoundedButton(
-                  title: 'Ana menüye dönmek için tıklayınız',
-                  bgColor: Colors.lightBlueAccent,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: RoundedButton(
+                    title: 'Ana menüye dönmek için tıklayınız',
+                    bgColor: Colors.lightBlueAccent,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              ),
             ],
           ),
         ),

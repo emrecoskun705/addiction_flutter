@@ -52,7 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
         'cinsiyet': gender,
         'anne': motherAlive,
         'baba': fatherAlive,
-        'birlikte': familyTogether
+        'birlikte': familyTogether,
+        'olusturuldu': FieldValue.serverTimestamp()
       });
     }
 
@@ -137,27 +138,29 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       }),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenHeight(20)),
-                  child: FlutterRadioGroup(
-                      titles: _parentRelation,
-                      labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenHeight(15),
-                          fontWeight: FontWeight.bold),
-                      labelVisible: true,
-                      label: "Aile Durumu",
-                      activeColor: Colors.blue,
-                      titleStyle: TextStyle(fontSize: 14),
-                      defaultSelected: _parentIndex,
-                      orientation: RGOrientation.HORIZONTAL,
-                      onChanged: (index) {
-                        setState(() {
-                          _parentIndex = index;
-                        });
-                      }),
-                ),
+                _indexHorizontal == 0 && _indexHorizontal2 == 0
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenHeight(20)),
+                        child: FlutterRadioGroup(
+                            titles: _parentRelation,
+                            labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: getProportionateScreenHeight(15),
+                                fontWeight: FontWeight.bold),
+                            labelVisible: true,
+                            label: "Aile Durumu",
+                            activeColor: Colors.blue,
+                            titleStyle: TextStyle(fontSize: 14),
+                            defaultSelected: _parentIndex,
+                            orientation: RGOrientation.HORIZONTAL,
+                            onChanged: (index) {
+                              setState(() {
+                                _parentIndex = index;
+                              });
+                            }),
+                      )
+                    : SizedBox(),
                 Center(
                   child: RoundedButton(
                       title: 'Başla',
@@ -167,8 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             classText.text == '' ||
                             selectedGender == null ||
                             _indexHorizontal == null ||
-                            _indexHorizontal2 == null ||
-                            _parentIndex == null) {
+                            _indexHorizontal2 == null) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Lütfen tüm alanları doldurunuz'),
                           ));
