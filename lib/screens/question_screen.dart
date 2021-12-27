@@ -4,6 +4,7 @@ import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
 import 'package:addiction_app/utils/question_bank.dart';
 import 'package:addiction_app/utils/size_config.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:addiction_app/constants.dart';
@@ -116,6 +117,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           trueFalseList.add(trueIcon);
                           userScoreList.add('Dogru');
                         } else {
+                          // if answer is false show a dialog about correct answer
+                          await (AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.ERROR,
+                            width: getProportionateScreenWidth(380),
+                            title: 'Yanlış cevap verdiniz',
+                            desc: questions[questionNumber].info,
+                            showCloseIcon: true,
+                          ).show());
                           falseCount++;
                           trueFalseList.add(falseIcon);
                           userScoreList.add('Yanlis');
@@ -167,6 +177,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           trueFalseList.add(trueIcon);
                           userScoreList.add('Dogru');
                         } else {
+                          // if answer is false show a dialog about correct answer
+                          await (AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.ERROR,
+                            width: getProportionateScreenWidth(380),
+                            title: 'Yanlış cevap verdiniz',
+                            desc: questions[questionNumber].info,
+                            showCloseIcon: true,
+                          ).show());
                           trueFalseList.add(falseIcon);
                           falseCount++;
                           userScoreList.add('Yanlis');
