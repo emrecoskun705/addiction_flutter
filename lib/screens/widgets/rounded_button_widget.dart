@@ -13,8 +13,8 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(5),
-          horizontal: getProportionateScreenWidth(5)),
+          vertical: getProportionateScreenHeight(15),
+          horizontal: getProportionateScreenWidth(15)),
       child: MaterialButton(
         textColor: Colors.white,
         color: bgColor,

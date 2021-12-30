@@ -45,14 +45,15 @@ class _MyAppState extends State<MyApp> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Container(
-                      child: Text('sadfsadsaaa'),
+                      child: Text('error about firebase'),
                     );
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
                     return LoginScreen();
                   }
-                  return Container(
-                    child: Text('sadfsadsa'),
+                  return Scaffold(
+                    body: Container(
+                        child: Center(child: CircularProgressIndicator())),
                   );
                 },
               ));
