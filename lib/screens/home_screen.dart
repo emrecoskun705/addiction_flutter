@@ -26,28 +26,30 @@ class HomeScreen extends StatelessWidget {
         ),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenHeight(30),
-                    horizontal: getProportionateScreenWidth(30)),
-                child: Text(
-                  'Mücadeleye Basla',
-                  style: TextStyle(
-                    fontSize: getProportionateScreenHeight(50),
-                    fontFamily: butterflyFont,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlueAccent,
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(30),
+                      horizontal: getProportionateScreenWidth(30)),
+                  child: Text(
+                    'Mücadeleye Basla',
+                    style: TextStyle(
+                      fontSize: getProportionateScreenHeight(50),
+                      fontFamily: butterflyFont,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlueAccent,
+                    ),
                   ),
                 ),
               ),
+              InfoBubbleWidget(
+                  message:
+                      'Bu anketin her seviyesinde bir bağımlılık türü ele alınmıştır. Lütfen herhangi bir bağımlılık türüne tıkla ve gelen soruları yanıtla.'),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  InfoBubbleWidget(
-                      message:
-                          'Bu anketin her seviyesinde bir bağımlılık türü ele alınmıştır. Lütfen herhangi bir bağımlılık türüne tıkla ve gelen soruları yanıtla.'),
                   buildLevelBox(
                       colour: Color(0xFFF2FF7A),
                       isCurrent: true,
@@ -97,10 +99,11 @@ class HomeScreen extends StatelessWidget {
       },
       child: Padding(
         padding: EdgeInsets.only(
-            left: getProportionateScreenWidth(120),
+            // left: getProportionateScreenWidth(120),
             top: getProportionateScreenHeight(10),
             bottom: getProportionateScreenHeight(10)),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(),
             Container(
