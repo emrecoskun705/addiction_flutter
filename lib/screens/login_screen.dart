@@ -3,7 +3,6 @@ import 'package:addiction_app/screens/widgets/info_bubble_widget.dart';
 import 'package:addiction_app/screens/widgets/info_text_field.dart';
 import 'package:addiction_app/screens/widgets/rounded_button_widget.dart';
 import 'package:addiction_app/utils/size_config.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_radio_group/flutter_radio_group.dart';
