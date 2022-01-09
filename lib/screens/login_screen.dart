@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return GestureDetector(
-      // this function fixes web mobile focus problem
+      // this function fixes mobile focus problem
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         body: ModalProgressHUD(
