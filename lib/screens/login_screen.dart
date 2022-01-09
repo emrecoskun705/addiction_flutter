@@ -10,6 +10,7 @@ import 'dart:async';
 
 import 'package:gender_picker/gender_picker.dart';
 import 'package:gender_picker/source/enums.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController gender = TextEditingController();
 
   TextEditingController parents = TextEditingController();
+
+  bool _isLoading = false;
 
   final _listHorizontal = ["Sağ", "Hayatta değil"];
   final _parentRelation = ['Birlikte', 'Ayrı'];
@@ -57,147 +60,157 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xFFC6FFDD),
-                  Color(0xFFFBD786),
-                  Color(0xFFF7797d),
-                ]),
-          ),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InfoBubbleWidget(
-                    message:
-                        'Lütfen anketin daha verimli olması için bilgilerinizi girer misiniz'),
-                InfoTextField(
-                    hint: 'Yaşınızı giriniz',
-                    prefixIcon: Icons.eight_k,
-                    controller: age),
-                InfoTextField(
-                    hint: 'Sınıfınızı giriniz',
-                    prefixIcon: Icons.eight_k,
-                    controller: classText),
-                GenderPickerWithImage(
-                  onChanged: (Gender? gender) {
-                    setState(() {
-                      selectedGender = gender;
-                    });
-                  },
-                  maleText: 'Erkek',
-                  femaleText: 'Kadın',
-                  selectedGender: selectedGender,
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenHeight(20)),
-                  child: FlutterRadioGroup(
-                      titles: _listHorizontal,
-                      labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenHeight(15),
-                          fontWeight: FontWeight.bold),
-                      labelVisible: true,
-                      label: "Anne",
-                      activeColor: Colors.blue,
-                      titleStyle: TextStyle(fontSize: 14),
-                      defaultSelected: _indexHorizontal,
-                      orientation: RGOrientation.HORIZONTAL,
-                      onChanged: (index) {
-                        setState(() {
-                          _indexHorizontal = index;
-                        });
-                      }),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenHeight(20)),
-                  child: FlutterRadioGroup(
-                      titles: _listHorizontal,
-                      labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: getProportionateScreenHeight(15),
-                          fontWeight: FontWeight.bold),
-                      labelVisible: true,
-                      label: "Baba",
-                      activeColor: Colors.blue,
-                      titleStyle: TextStyle(fontSize: 14),
-                      defaultSelected: _indexHorizontal2,
-                      orientation: RGOrientation.HORIZONTAL,
-                      onChanged: (index) {
-                        setState(() {
-                          _indexHorizontal2 = index;
-                        });
-                      }),
-                ),
-                _indexHorizontal == 0 && _indexHorizontal2 == 0
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                            left: getProportionateScreenHeight(20)),
-                        child: FlutterRadioGroup(
-                            titles: _parentRelation,
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: getProportionateScreenHeight(15),
-                                fontWeight: FontWeight.bold),
-                            labelVisible: true,
-                            label: "Aile Durumu",
-                            activeColor: Colors.blue,
-                            titleStyle: TextStyle(fontSize: 14),
-                            defaultSelected: _parentIndex,
-                            orientation: RGOrientation.HORIZONTAL,
-                            onChanged: (index) {
-                              setState(() {
-                                _parentIndex = index;
-                              });
-                            }),
-                      )
-                    : SizedBox(),
-                Center(
-                  child: RoundedButton(
-                      title: 'Başla',
-                      bgColor: Colors.lightBlue,
-                      onPressed: () async {
-                        if (age.text == '' ||
-                            classText.text == '' ||
-                            selectedGender == null ||
-                            _indexHorizontal == null ||
-                            _indexHorizontal2 == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Lütfen tüm alanları doldurunuz'),
-                          ));
-                          return;
-                        }
+      body: ModalProgressHUD(
+        inAsyncCall: _isLoading,
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xFFC6FFDD),
+                    Color(0xFFFBD786),
+                    Color(0xFFF7797d),
+                  ]),
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InfoBubbleWidget(
+                      message:
+                          'Lütfen anketin daha verimli olması için bilgilerinizi girer misiniz'),
+                  InfoTextField(
+                      hint: 'Yaşınızı giriniz',
+                      prefixIcon: Icons.eight_k,
+                      controller: age),
+                  InfoTextField(
+                      hint: 'Sınıfınızı giriniz',
+                      prefixIcon: Icons.eight_k,
+                      controller: classText),
+                  GenderPickerWithImage(
+                    onChanged: (Gender? gender) {
+                      setState(() {
+                        selectedGender = gender;
+                      });
+                    },
+                    maleText: 'Erkek',
+                    femaleText: 'Kadın',
+                    selectedGender: selectedGender,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: getProportionateScreenHeight(20)),
+                    child: FlutterRadioGroup(
+                        titles: _listHorizontal,
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(15),
+                            fontWeight: FontWeight.bold),
+                        labelVisible: true,
+                        label: "Anne",
+                        activeColor: Colors.blue,
+                        titleStyle: TextStyle(fontSize: 14),
+                        defaultSelected: _indexHorizontal,
+                        orientation: RGOrientation.HORIZONTAL,
+                        onChanged: (index) {
+                          setState(() {
+                            _indexHorizontal = index;
+                          });
+                        }),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: getProportionateScreenHeight(20)),
+                    child: FlutterRadioGroup(
+                        titles: _listHorizontal,
+                        labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(15),
+                            fontWeight: FontWeight.bold),
+                        labelVisible: true,
+                        label: "Baba",
+                        activeColor: Colors.blue,
+                        titleStyle: TextStyle(fontSize: 14),
+                        defaultSelected: _indexHorizontal2,
+                        orientation: RGOrientation.HORIZONTAL,
+                        onChanged: (index) {
+                          setState(() {
+                            _indexHorizontal2 = index;
+                          });
+                        }),
+                  ),
+                  _indexHorizontal == 0 && _indexHorizontal2 == 0
+                      ? Padding(
+                          padding: EdgeInsets.only(
+                              left: getProportionateScreenHeight(20)),
+                          child: FlutterRadioGroup(
+                              titles: _parentRelation,
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: getProportionateScreenHeight(15),
+                                  fontWeight: FontWeight.bold),
+                              labelVisible: true,
+                              label: "Aile Durumu",
+                              activeColor: Colors.blue,
+                              titleStyle: TextStyle(fontSize: 14),
+                              defaultSelected: _parentIndex,
+                              orientation: RGOrientation.HORIZONTAL,
+                              onChanged: (index) {
+                                setState(() {
+                                  _parentIndex = index;
+                                });
+                              }),
+                        )
+                      : SizedBox(),
+                  Center(
+                    child: RoundedButton(
+                        title: 'Başla',
+                        bgColor: Colors.lightBlue,
+                        onPressed: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          if (age.text == '' ||
+                              classText.text == '' ||
+                              selectedGender == null ||
+                              _indexHorizontal == null ||
+                              _indexHorizontal2 == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Lütfen tüm alanları doldurunuz'),
+                            ));
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            return;
+                          }
 
-                        var deneme = await addUser(
-                            age: int.parse(age.text),
-                            studentClass: int.parse(classText.text),
-                            gender: selectedGender == Gender.Male
-                                ? 'erkek'
-                                : 'kadin',
-                            motherAlive:
-                                _indexHorizontal == 0 ? 'Sag' : 'Hayatta degil',
-                            fatherAlive: _indexHorizontal2 == 0
-                                ? 'Sag'
-                                : 'Hayatta degil',
-                            familyTogether:
-                                _parentIndex == 0 ? 'Birlikte' : 'Ayri');
+                          var deneme = await addUser(
+                              age: int.parse(age.text),
+                              studentClass: int.parse(classText.text),
+                              gender: selectedGender == Gender.Male
+                                  ? 'erkek'
+                                  : 'kadin',
+                              motherAlive: _indexHorizontal == 0
+                                  ? 'Sag'
+                                  : 'Hayatta degil',
+                              fatherAlive: _indexHorizontal2 == 0
+                                  ? 'Sag'
+                                  : 'Hayatta degil',
+                              familyTogether:
+                                  _parentIndex == 0 ? 'Birlikte' : 'Ayri');
 
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(deneme.id)),
-                            (route) => false);
-                      }),
-                )
-              ],
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen(deneme.id)),
+                              (route) => false);
+                        }),
+                  )
+                ],
+              ),
             ),
           ),
         ),
