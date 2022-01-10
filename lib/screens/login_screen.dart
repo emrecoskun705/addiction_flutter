@@ -95,6 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: classText),
                     GenderPickerWithImage(
                       onChanged: (Gender? gender) {
+                        // when click gender type unfocus
+                        FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {
                           selectedGender = gender;
                         });
@@ -119,6 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           defaultSelected: _indexHorizontal,
                           orientation: RGOrientation.HORIZONTAL,
                           onChanged: (index) {
+                            // when click unfocus
+                            FocusManager.instance.primaryFocus?.unfocus();
                             setState(() {
                               _indexHorizontal = index;
                             });
@@ -140,6 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           defaultSelected: _indexHorizontal2,
                           orientation: RGOrientation.HORIZONTAL,
                           onChanged: (index) {
+                            // when click unfocus
+                            FocusManager.instance.primaryFocus?.unfocus();
                             setState(() {
                               _indexHorizontal2 = index;
                             });
@@ -162,6 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 defaultSelected: _parentIndex,
                                 orientation: RGOrientation.HORIZONTAL,
                                 onChanged: (index) {
+                                  // when click unfocus
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   setState(() {
                                     _parentIndex = index;
                                   });
